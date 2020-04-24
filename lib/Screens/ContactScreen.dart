@@ -6,7 +6,31 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  @override
+  void onTabBar(int index) {
+    switch (index) {
+      case 0: {
+        Navigator.pushNamed(context, 'Home');
+        break;
+      }
+      case 1: {
+        Navigator.pushNamed(context, 'Graph');
+        break;
+      }
+      case 2: {
+        Navigator.pushNamed(context, 'Region');
+        break;
+      }
+      case 3: {
+        Navigator.pushNamed(context, 'Testing');
+        break;
+      }
+      case 4: {
+        Navigator.pushNamed(context, 'Contact');
+        break;
+      }
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -18,6 +42,7 @@ class _ContactScreenState extends State<ContactScreen> {
           unselectedItemColor: Colors.white30,
           type: BottomNavigationBarType.fixed,
           currentIndex: 4,
+          onTap: onTabBar,
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),

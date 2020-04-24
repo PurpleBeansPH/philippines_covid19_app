@@ -7,6 +7,31 @@ class TestingCenterScreen extends StatefulWidget {
 }
 
 class _TestingCenterScreenState extends State<TestingCenterScreen> {
+  void onTabBar(int index) {
+    switch (index) {
+      case 0: {
+        Navigator.pushNamed(context, 'Home');
+        break;
+      }
+      case 1: {
+        Navigator.pushNamed(context, 'Graph');
+        break;
+      }
+      case 2: {
+        Navigator.pushNamed(context, 'Region');
+        break;
+      }
+      case 3: {
+        Navigator.pushNamed(context, 'Testing');
+        break;
+      }
+      case 4: {
+        Navigator.pushNamed(context, 'Contact');
+        break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +44,7 @@ class _TestingCenterScreenState extends State<TestingCenterScreen> {
           unselectedItemColor: Colors.white30,
           type: BottomNavigationBarType.fixed,
           currentIndex: 3,
+          onTap: onTabBar,
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),
