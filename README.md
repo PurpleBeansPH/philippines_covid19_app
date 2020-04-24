@@ -1,5 +1,4 @@
-# philippinescovid19app
-
+# Philippines covid19 APP [![Build Status](https://travis-ci.org/PurpleBeansPH/philippines_covid19_app.svg?branch=master)](https://travis-ci.org/PurpleBeansPH/philippines_covid19_app)
 This App uses to DOH dropdata to create user friendly interface
 
 ## Getting Started
