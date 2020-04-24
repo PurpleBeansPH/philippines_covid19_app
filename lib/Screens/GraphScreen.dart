@@ -14,7 +14,11 @@ class _GraphScreenState extends State<GraphScreen> {
           title: Text('Philippines nCov App'),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
+          backgroundColor: Colors.deepPurple,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white30,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 1,
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),

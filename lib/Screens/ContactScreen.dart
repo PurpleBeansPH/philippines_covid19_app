@@ -13,7 +13,11 @@ class _ContactScreenState extends State<ContactScreen> {
           title: Text('Philippines nCov App'),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
+          backgroundColor: Colors.deepPurple,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white30,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 4,
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),

@@ -14,6 +14,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Philippines nCov App'),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.deepPurple,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white30,
+        type: BottomNavigationBarType.fixed,
         currentIndex: 0,
         items: [
           BottomNavigationBarItem(
