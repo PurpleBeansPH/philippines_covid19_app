@@ -38,6 +38,17 @@ class _TestingCenterScreenState extends State<TestingCenterScreen> {
         appBar: AppBar(
           title: Text('Philippines nCov App'),
         ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: List.generate(4, (index) {
+            return Center(
+              child: Text(
+                'Item $index',
+                style: Theme.of(context).textTheme.headline,
+              ),
+            );
+          }),
+        ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.deepPurple,
           selectedItemColor: Colors.white,

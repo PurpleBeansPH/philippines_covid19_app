@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
   @override
@@ -31,11 +32,33 @@ class _ContactScreenState extends State<ContactScreen> {
     }
   }
 
+  _launchURL() async {
+    const url = 'https://drive.google.com/drive/folders/10VkiUA8x7TS2jkibhSZK1gmWxFM-EoZP';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Widget buildColumn() => Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Text("App Made By: PurpleBeansPH"),
+      Text("Data used: DOH COVID-19 DataDrop"),
+      RaisedButton(
+        onPressed: _launchURL,
+        child: Text('DOH Datadrop Google Drive Page'),
+      ),
+    ],
+  );
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Philippines nCov App'),
         ),
+        body: Center(child: buildColumn()),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.deepPurple,
           selectedItemColor: Colors.white,

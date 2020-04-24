@@ -32,12 +32,25 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Widget buildColumn() => Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Text("Coronavirus Cases:"),
+      Text("0"),
+      Text("Recovered:"),
+      Text("0"),
+      Text("Deaths:"),
+      Text("0"),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Philippines nCov App'),
       ),
+      body: Center(child: buildColumn()),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepPurple,
         selectedItemColor: Colors.white,
