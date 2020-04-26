@@ -10,9 +10,59 @@ class CSVReader extends StatefulWidget {
 
 class _CSVReaderState extends State<CSVReader> {
   List<List<dynamic>> data = [];
+  var removalTypeMap = Map();
+  var regionsMap = Map();
+  var citiesMap = Map();
+  var citiesFilterByRegionsMap = Map();
+
+  void filterRemovalType() {
+    removalTypeMap.clear();
+    for(var i = 1; i < data.length; i++) {
+      if(!removalTypeMap.containsKey(data[i][7])) {
+        removalTypeMap[data[i][7]] = 1;
+      } else {
+        removalTypeMap[data[i][7]] +=1;
+      }
+    }
+  }
+
+  void filterRegions() {
+    regionsMap.clear();
+    for(var i = 1; i < data.length; i++) {
+      if(!regionsMap.containsKey(data[i][10])) {
+        regionsMap[data[i][10]] = 1;
+      } else {
+        regionsMap[data[i][10]] +=1;
+      }
+    }
+  }
+
+  void filterCities() {
+    citiesMap.clear();
+    for(var i = 1; i < data.length; i++) {
+      if(!citiesMap.containsKey(data[i][11])) {
+        citiesMap[data[i][11]] = 1;
+      } else {
+        citiesMap[data[i][11]] +=1;
+      }
+    }
+  }
+
+  void filterCitiesByRegions() {
+    citiesFilterByRegionsMap.clear();
+    for(var i = 1; i < data.length; i++) {
+      if(data[i][10].toString() == "NCR") {
+        if(!citiesFilterByRegionsMap.containsKey(data[i][11])) {
+          citiesFilterByRegionsMap[data[i][11]] = 1;
+        } else {
+          citiesFilterByRegionsMap[data[i][11]] +=1;
+        }
+      }
+    }
+  }
 
   loadAssets() async {
-    final mydata = await rootBundle.loadString("assets/Book1.csv");
+    final mydata = await rootBundle.loadString("assets/CaseInformation.csv");
     List<List<dynamic>> csvTable = CsvToListConverter().convert(mydata);
     data = csvTable;
   }
@@ -25,17 +75,16 @@ class _CSVReaderState extends State<CSVReader> {
         child: Icon(Icons.refresh),
         onPressed: () async {
           await loadAssets();
-          print(data);
+          filterRemovalType();
+          filterRegions();
+          filterCities();
+          filterCitiesByRegions();
+          print("total cases: " + data.length.toString());
+          print(removalTypeMap);
+          print(regionsMap);
+          print(citiesMap);
+          print(citiesFilterByRegionsMap);
         },
-      ),
-      body: Table(
-        children: data.map((item) {
-          return TableRow(
-            children: item.map((row) {
-              return Text(row.toString());
-            }).toList()
-          );
-        }).toList(),
       ),
     );
   }
