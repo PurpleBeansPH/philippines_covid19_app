@@ -55,7 +55,7 @@ class CSVReader {
 
   Future getTotalAdmitted() async {
     if(data.isEmpty){
-      await new Future.delayed(const Duration(seconds : 7));
+      await new Future.delayed(const Duration(seconds : 5));
     }
     var admittedMap = Map();
     for(var i = 1; i < data.length; i++) {
