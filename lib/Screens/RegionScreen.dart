@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:philippinescovid19app/Utills/CSVReader.dart';
+import 'package:philippinescovid19app/Utills/CSVRegionScreen.dart';
 
 class RegionScreen extends StatefulWidget {
 
@@ -39,7 +39,7 @@ class _RegionScreenState extends State<RegionScreen> {
         appBar: AppBar(
           title: Text('Philippines nCov App'),
         ),
-        body: CSVReader(),
+        body: CSVRegionScreen(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.deepPurple,
           selectedItemColor: Colors.white,

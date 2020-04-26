@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:philippinescovid19app/Utills/CSVHomeScreen.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -32,17 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget buildColumn() => Column(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Text("Coronavirus Cases:"),
-      Text("0"),
-      Text("Recovered:"),
-      Text("0"),
-      Text("Deaths:"),
-      Text("0"),
-    ],
-  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Philippines nCov App'),
       ),
-      body: Center(child: buildColumn()),
+      body: CSVHomeScreen(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepPurple,
         selectedItemColor: Colors.white,
