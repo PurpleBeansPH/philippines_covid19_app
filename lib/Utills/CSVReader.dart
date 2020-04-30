@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class CSVReader {
   List<List<dynamic>> data = [];
@@ -65,11 +66,13 @@ class CSVReader {
         admittedMap[data[i][9]] +=1;
       }
     }
-    print(admittedMap);
     return admittedMap["Yes"];
   }
 
   Future getRegions() async{
+    if(data.isEmpty){
+      await new Future.delayed(const Duration(seconds : 5));
+    }
     var regionsMap = Map();
     for(var i = 1; i < data.length; i++) {
       if(!regionsMap.containsKey(data[i][10])) {
@@ -82,6 +85,9 @@ class CSVReader {
   }
 
   Future getCities() async{
+    if(data.isEmpty){
+      await new Future.delayed(const Duration(seconds : 5));
+    }
     var citiesMap = Map();
     for(var i = 1; i < data.length; i++) {
       if(!citiesMap.containsKey(data[i][11])) {
@@ -94,6 +100,9 @@ class CSVReader {
   }
 
   Future filterCitiesByRegions(String region) async{
+    if(data.isEmpty){
+      await new Future.delayed(const Duration(seconds : 5));
+    }
     var citiesFilterByRegionsMap = Map();
     for(var i = 1; i < data.length; i++) {
       if(data[i][10].toString() == region) {
@@ -105,6 +114,36 @@ class CSVReader {
       }
     }
     return citiesFilterByRegionsMap;
+  }
+
+  Future getDateOfCases() async{
+    if(data.isEmpty){
+      await new Future.delayed(const Duration(seconds : 5));
+    }
+    var dateOfCasesMap = Map();
+    for(var i = 1; i < data.length; i++) {
+      if(!dateOfCasesMap.containsKey(data[i][4])) {
+        dateOfCasesMap[data[i][4]] = 1;
+      } else {
+        dateOfCasesMap[data[i][4]] +=1;
+      }
+    }
+    var dateList = [];
+    List<DateTime> caseDateList = [];
+    var format = new DateFormat("dd-MMM-yy");
+    dateList = dateOfCasesMap.keys.toList();
+    for (int i = 0; i < dateList.length; i++) {
+      caseDateList.add(format.parse(dateList[i]));
+    }
+    caseDateList.sort((a,b) => a.compareTo(b));
+
+    var formatter = new DateFormat('dd-MMM-yyyy');
+    List<String> dateSortList = [];
+    for (int f = 0; f < dateList.length; f++) {
+      dateSortList.add(formatter.format(caseDateList[f]));
+    }
+
+    return dateOfCasesMap;
   }
 
 }

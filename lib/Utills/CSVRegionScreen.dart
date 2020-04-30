@@ -20,7 +20,7 @@ class _CSVRegionScreenState extends State<CSVRegionScreen> {
               children = <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Text('Recovered: ${snapshot.data}'),
+                  child: Text('Recovered: ${snapshot.data}', style: TextStyle(fontSize: 20, color: Colors.lightGreen)),
                 )
               ];
             } else if (snapshot.hasError) {
@@ -56,7 +56,7 @@ class _CSVRegionScreenState extends State<CSVRegionScreen> {
               children = <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Text('Died: ${snapshot.data}'),
+                  child: Text('Died: ${snapshot.data}', style: TextStyle(fontSize: 20, color: Colors.redAccent)),
                 )
               ];
             } else if (snapshot.hasError) {
@@ -92,7 +92,7 @@ class _CSVRegionScreenState extends State<CSVRegionScreen> {
               children = <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Text('Total Cases: ${snapshot.data}'),
+                  child: Text('Total Cases: ${snapshot.data}', style: TextStyle(fontSize: 20)),
                 )
               ];
             } else if (snapshot.hasError) {
@@ -128,7 +128,7 @@ class _CSVRegionScreenState extends State<CSVRegionScreen> {
               children = <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Text('Currently Admitted: ${snapshot.data}'),
+                  child: Text('Currently Admitted: ${snapshot.data}', style: TextStyle(fontSize: 15)),
                 )
               ];
             } else if (snapshot.hasError) {

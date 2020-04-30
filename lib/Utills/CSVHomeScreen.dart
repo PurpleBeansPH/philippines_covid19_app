@@ -10,7 +10,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
   Widget buildColumn() => Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
-      Text("Coronavirus Cases:"),
+      Text("Total Coronavirus Cases:" , style: TextStyle(fontSize: 30)),
       FutureBuilder<dynamic>(
         future: CSVReader().getTotalCases(),
         // a previously-obtained Future<String> or null
@@ -20,7 +20,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
             children = <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(snapshot.data.toString()),
+                child: Text(snapshot.data.toString(), style: TextStyle(fontSize: 30)),
               )
             ];
           } else if (snapshot.hasError) {
@@ -47,7 +47,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
           );
         },
       ),
-      Text("Recovered:"),
+      Text("Recovered:", style: TextStyle(fontSize: 30, color: Colors.lightGreen)),
       FutureBuilder<dynamic>(
         future: CSVReader().getCountTotalRecovered(),
         // a previously-obtained Future<String> or null
@@ -57,7 +57,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
             children = <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(snapshot.data.toString()),
+                child: Text(snapshot.data.toString(), style: TextStyle(fontSize: 30, color: Colors.lightGreen)),
               )
             ];
           } else if (snapshot.hasError) {
@@ -84,7 +84,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
           );
         },
       ),
-      Text("Deaths:"),
+      Text("Deaths:", style: TextStyle(fontSize: 30, color: Colors.redAccent)),
       FutureBuilder<dynamic>(
         future: CSVReader().getCountTotalDied(),
         // a previously-obtained Future<String> or null
@@ -94,7 +94,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
             children = <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(snapshot.data.toString()),
+                child: Text(snapshot.data.toString(),style: TextStyle(fontSize: 30, color: Colors.redAccent)),
               )
             ];
           } else if (snapshot.hasError) {

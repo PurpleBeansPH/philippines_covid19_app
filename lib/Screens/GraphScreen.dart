@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:philippinescovid19app/Utills/ChartActiveCases.dart';
+import 'package:philippinescovid19app/Utills/CSVGraphScreen.dart';
+import 'package:philippinescovid19app/Utills/TimeCasesChart.dart';
 
 class GraphScreen extends StatefulWidget {
 
@@ -40,7 +41,7 @@ class _GraphScreenState extends State<GraphScreen> {
         appBar: AppBar(
           title: Text('Philippines nCov App'),
         ),
-        body: StackedAreaCustomColorLineChart.withSampleData(),
+        body: TimeCasesChart.withSampleData(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.deepPurple,
           selectedItemColor: Colors.white,
