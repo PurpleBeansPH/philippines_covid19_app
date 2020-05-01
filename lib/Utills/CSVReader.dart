@@ -128,22 +128,6 @@ class CSVReader {
         dateOfCasesMap[data[i][4]] +=1;
       }
     }
-    var dateList = [];
-    List<DateTime> caseDateList = [];
-    var format = new DateFormat("dd-MMM-yy");
-    dateList = dateOfCasesMap.keys.toList();
-    for (int i = 0; i < dateList.length; i++) {
-      caseDateList.add(format.parse(dateList[i]));
-    }
-    caseDateList.sort((a,b) => a.compareTo(b));
-
-    var formatter = new DateFormat('dd-MMM-yyyy');
-    List<String> dateSortList = [];
-    for (int f = 0; f < dateList.length; f++) {
-      dateSortList.add(formatter.format(caseDateList[f]));
-    }
-
     return dateOfCasesMap;
   }
-
 }

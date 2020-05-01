@@ -7,6 +7,7 @@
 /// the same color as the line.
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TimeCasesChart extends StatelessWidget {
   final List<charts.Series> seriesList;
@@ -14,78 +15,82 @@ class TimeCasesChart extends StatelessWidget {
 
   TimeCasesChart(this.seriesList, {this.animate});
 
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
-  factory TimeCasesChart.withSampleData() {
+  factory TimeCasesChart.withData(Map timeCasesMap) {
     return new TimeCasesChart(
-      _createSampleData(),
+      _addData(timeCasesMap),
       // Disable animations for image tests.
-      animate: false,
+      animate: true,
     );
   }
 
+  static List<charts.Series<TimeSeriesCases, DateTime>> _addData(
+      Map timeCasesMap) {
+    List<DateTime> caseDateList = [];
 
-  @override
-  Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      defaultRenderer: new charts.LineRendererConfig(),
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
-    );
-  }
+    var format1 = new DateFormat("dd-MMM-yy");
+    var dateList = timeCasesMap.keys.toList();
 
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesCases, DateTime>> _createSampleData() {
-    final desktopSalesData = [
-      new TimeSeriesCases(new DateTime(2017, 9, 19), 5),
-      new TimeSeriesCases(new DateTime(2017, 9, 26), 25),
-      new TimeSeriesCases(new DateTime(2017, 10, 3), 100),
-      new TimeSeriesCases(new DateTime(2017, 10, 10), 75),
-    ];
+    for (int i = 0; i < dateList.length; i++) {
+      caseDateList.add(format1.parse(dateList[i]).add(Duration(
+          milliseconds: DateTime(1970 + 2000).millisecondsSinceEpoch)));
+    }
+    caseDateList.sort((a, b) => a.compareTo(b));
 
-    final tableSalesData = [
-      new TimeSeriesCases(new DateTime(2017, 9, 19), 10),
-      new TimeSeriesCases(new DateTime(2017, 9, 26), 50),
-      new TimeSeriesCases(new DateTime(2017, 10, 3), 200),
-      new TimeSeriesCases(new DateTime(2017, 10, 10), 150),
-    ];
+    var formatter = new DateFormat('dd-MMM-yy');
+    List<String> dateSortList = [];
+    for (int f = 0; f < dateList.length; f++) {
+      dateSortList.add(formatter.format(caseDateList[f]));
+    }
 
-    final mobileSalesData = [
-      new TimeSeriesCases(new DateTime(2017, 9, 19), 10),
-      new TimeSeriesCases(new DateTime(2017, 9, 26), 30),
-      new TimeSeriesCases(new DateTime(2017, 10, 3), 80),
-      new TimeSeriesCases(new DateTime(2017, 10, 10), 110),
-    ];
+    List<TimeSeriesCases> totalCasesData = [];
+
+    for (int h = 0; h < dateSortList.length; h++) {
+      totalCasesData.add(
+          new TimeSeriesCases(caseDateList[h], timeCasesMap[dateSortList[h]]));
+    }
 
     return [
       new charts.Series<TimeSeriesCases, DateTime>(
-        id: 'Desktop',
+        id: 'TotalCases',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesCases sales, _) => sales.time,
-        measureFn: (TimeSeriesCases sales, _) => sales.cases,
-        data: desktopSalesData,
+        domainFn: (TimeSeriesCases cases, _) => cases.date,
+        measureFn: (TimeSeriesCases cases, _) => cases.amount,
+        data: totalCasesData,
       ),
-      new charts.Series<TimeSeriesCases, DateTime>(
-        id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (TimeSeriesCases sales, _) => sales.time,
-        measureFn: (TimeSeriesCases sales, _) => sales.cases,
-        data: tableSalesData,
-      ),
-      new charts.Series<TimeSeriesCases, DateTime>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (TimeSeriesCases sales, _) => sales.time,
-          measureFn: (TimeSeriesCases sales, _) => sales.cases,
-          data: mobileSalesData)
     ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.TimeSeriesChart(seriesList,
+        animate: animate,
+        defaultInteractions: false,
+        defaultRenderer: new charts.BarRendererConfig<DateTime>(),
+        dateTimeFactory: const charts.LocalDateTimeFactory(),
+        behaviors: [
+          new charts.SlidingViewport(),
+          new charts.PanAndZoomBehavior(),
+          new charts.ChartTitle('Daily Cases Timeline',
+              behaviorPosition: charts.BehaviorPosition.top,
+              titleOutsideJustification: charts.OutsideJustification.middle,
+              innerPadding: 18),
+          new charts.ChartTitle('Cases',
+              behaviorPosition: charts.BehaviorPosition.start,
+              titleOutsideJustification:
+                  charts.OutsideJustification.middleDrawArea),
+          new charts.ChartTitle('Date',
+              behaviorPosition: charts.BehaviorPosition.bottom,
+              titleOutsideJustification: charts.OutsideJustification.middle),
+        ]
+
+    );
   }
 }
 
 /// Sample time series data type.
 class TimeSeriesCases {
-  final DateTime time;
-  final int cases;
+  final DateTime date;
+  final int amount;
 
-  TimeSeriesCases(this.time, this.cases);
+  TimeSeriesCases(this.date, this.amount);
 }

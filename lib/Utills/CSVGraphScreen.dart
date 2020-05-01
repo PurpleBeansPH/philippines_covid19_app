@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:philippinescovid19app/Utills/CSVReader.dart';
+import 'package:philippinescovid19app/Utills/TimeCasesChart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class CSVGraphScreen extends StatefulWidget {
@@ -8,30 +9,43 @@ class CSVGraphScreen extends StatefulWidget {
 }
 
 class _CSVGraphScreenState extends State<CSVGraphScreen> {
-  List<charts.Series> seriesList;
-
-  static List<charts.Series<LinearCases, int>> createData() {
-    final data = [
-      new LinearCases(0, 5),
-      new LinearCases(1, 25),
-      new LinearCases(2, 100),
-      new LinearCases(3, 75),
-    ];
-
-    return [
-      new charts.Series<LinearCases, int>(
-        id: 'Cases',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearCases cases, _) => cases.date,
-        measureFn: (LinearCases cases, _) => cases.amount,
-        data: data,
-      )
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList);
+    return Container(
+      width: double.infinity,
+      child: FutureBuilder<dynamic>(
+        future: CSVReader().getDateOfCases(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+                Expanded(flex: 5, child: TimeCasesChart.withData(snapshot.data))
+            ];
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+          } else {
+            children = <Widget>[
+              const Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Building Graph'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
