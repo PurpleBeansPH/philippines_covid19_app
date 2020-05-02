@@ -5,28 +5,32 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class CSVReader {
-  List<List<dynamic>> data = [];
+  List<List<dynamic>> caseInformationData = [];
+  List<List<dynamic>> testingAggregatesData = [];
 
   CSVReader() {
     _loadAssets();
   }
 
   _loadAssets() async {
-    final myData = await rootBundle.loadString("assets/CaseInformation.csv");
-    List<List<dynamic>> csvTable = CsvToListConverter().convert(myData);
-    data = csvTable;
+    final myCaseInformationData = await rootBundle.loadString("assets/CaseInformation.csv");
+    List<List<dynamic>> csvTable1 = CsvToListConverter().convert(myCaseInformationData);
+    final myTestingAggregatesData = await rootBundle.loadString("assets/CaseInformation.csv");
+    List<List<dynamic>> csvTable2 = CsvToListConverter().convert(myTestingAggregatesData);
+    caseInformationData = csvTable1;
+    testingAggregatesData = csvTable2;
   }
 
   Future getCountTotalRecovered() async{
     var removalTypeMap = Map();
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
-    for(var i = 1; i < data.length; i++) {
-      if(!removalTypeMap.containsKey(data[i][7])) {
-        removalTypeMap[data[i][7]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(!removalTypeMap.containsKey(caseInformationData[i][7])) {
+        removalTypeMap[caseInformationData[i][7]] = 1;
       } else {
-        removalTypeMap[data[i][7]] +=1;
+        removalTypeMap[caseInformationData[i][7]] +=1;
       }
     }
     return removalTypeMap["Recovered"];
@@ -34,82 +38,82 @@ class CSVReader {
 
   Future getCountTotalDied() async{
     var removalTypeMap = Map();
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
-    for(var i = 1; i < data.length; i++) {
-      if(!removalTypeMap.containsKey(data[i][7])) {
-        removalTypeMap[data[i][7]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(!removalTypeMap.containsKey(caseInformationData[i][7])) {
+        removalTypeMap[caseInformationData[i][7]] = 1;
       } else {
-        removalTypeMap[data[i][7]] +=1;
+        removalTypeMap[caseInformationData[i][7]] +=1;
       }
     }
     return removalTypeMap["Died"];
   }
 
   Future getTotalCases() async {
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
-    return data.length - 1;
+    return caseInformationData.length - 1;
   }
 
   Future getTotalAdmitted() async {
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
     var admittedMap = Map();
-    for(var i = 1; i < data.length; i++) {
-      if(!admittedMap.containsKey(data[i][9])) {
-        admittedMap[data[i][9]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(!admittedMap.containsKey(caseInformationData[i][9])) {
+        admittedMap[caseInformationData[i][9]] = 1;
       } else {
-        admittedMap[data[i][9]] +=1;
+        admittedMap[caseInformationData[i][9]] +=1;
       }
     }
     return admittedMap["Yes"];
   }
 
   Future getRegions() async{
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
     var regionsMap = Map();
-    for(var i = 1; i < data.length; i++) {
-      if(!regionsMap.containsKey(data[i][10])) {
-        regionsMap[data[i][10]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(!regionsMap.containsKey(caseInformationData[i][10])) {
+        regionsMap[caseInformationData[i][10]] = 1;
       } else {
-        regionsMap[data[i][10]] +=1;
+        regionsMap[caseInformationData[i][10]] +=1;
       }
     }
     return regionsMap;
   }
 
   Future getCities() async{
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
     var citiesMap = Map();
-    for(var i = 1; i < data.length; i++) {
-      if(!citiesMap.containsKey(data[i][11])) {
-        citiesMap[data[i][11]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(!citiesMap.containsKey(caseInformationData[i][11])) {
+        citiesMap[caseInformationData[i][11]] = 1;
       } else {
-        citiesMap[data[i][11]] +=1;
+        citiesMap[caseInformationData[i][11]] +=1;
       }
     }
     return citiesMap;
   }
 
   Future filterCitiesByRegions(String region) async{
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
     var citiesFilterByRegionsMap = Map();
-    for(var i = 1; i < data.length; i++) {
-      if(data[i][10].toString() == region) {
-        if(!citiesFilterByRegionsMap.containsKey(data[i][11])) {
-          citiesFilterByRegionsMap[data[i][11]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(caseInformationData[i][10].toString() == region) {
+        if(!citiesFilterByRegionsMap.containsKey(caseInformationData[i][11])) {
+          citiesFilterByRegionsMap[caseInformationData[i][11]] = 1;
         } else {
-          citiesFilterByRegionsMap[data[i][11]] +=1;
+          citiesFilterByRegionsMap[caseInformationData[i][11]] +=1;
         }
       }
     }
@@ -117,15 +121,15 @@ class CSVReader {
   }
 
   Future getDateOfCases() async{
-    if(data.isEmpty){
+    if(caseInformationData.isEmpty){
       await new Future.delayed(const Duration(seconds : 5));
     }
     var dateOfCasesMap = Map();
-    for(var i = 1; i < data.length; i++) {
-      if(!dateOfCasesMap.containsKey(data[i][4])) {
-        dateOfCasesMap[data[i][4]] = 1;
+    for(var i = 1; i < caseInformationData.length; i++) {
+      if(!dateOfCasesMap.containsKey(caseInformationData[i][4])) {
+        dateOfCasesMap[caseInformationData[i][4]] = 1;
       } else {
-        dateOfCasesMap[data[i][4]] +=1;
+        dateOfCasesMap[caseInformationData[i][4]] +=1;
       }
     }
     return dateOfCasesMap;

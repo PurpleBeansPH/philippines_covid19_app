@@ -12,23 +12,23 @@ class _GraphScreenState extends State<GraphScreen> {
   void onTabBar(int index) {
     switch (index) {
       case 0: {
-        Navigator.pushNamed(context, 'Home');
+        Navigator.pushReplacementNamed(context, 'Home');
         break;
       }
       case 1: {
-        Navigator.pushNamed(context, 'Graph');
+        Navigator.pushReplacementNamed(context, 'Graph');
         break;
       }
       case 2: {
-        Navigator.pushNamed(context, 'Region');
+        Navigator.pushReplacementNamed(context, 'Region');
         break;
       }
       case 3: {
-        Navigator.pushNamed(context, 'Testing');
+        Navigator.pushReplacementNamed(context, 'Testing');
         break;
       }
       case 4: {
-        Navigator.pushNamed(context, 'Contact');
+        Navigator.pushReplacementNamed(context, 'Contact');
         break;
       }
     }
