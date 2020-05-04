@@ -18,9 +18,7 @@ class CSVReader {
     final myTestingAggregatesData = await rootBundle.loadString("assets/TestingAggregates.csv");
     List<List<dynamic>> csvTable2 = CsvToListConverter().convert(myTestingAggregatesData);
     caseInformationData = csvTable1;
-    print(csvTable1);
     testingAggregatesData = csvTable2;
-    print(csvTable2);
   }
 
   Future getCountTotalRecovered() async{
