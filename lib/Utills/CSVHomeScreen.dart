@@ -11,7 +11,7 @@ class _CSVHomeScreenState extends State<CSVHomeScreen> {
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Text("Last Update" , style: TextStyle(fontSize: 30)),
-      Text("May 1" , style: TextStyle(fontSize: 30)),
+      Text("May 10" , style: TextStyle(fontSize: 30)),
       Text("Total Coronavirus Cases:" , style: TextStyle(fontSize: 30)),
       FutureBuilder<dynamic>(
         future: CSVReader().getTotalCases(),

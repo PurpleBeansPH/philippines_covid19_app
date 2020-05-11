@@ -27,16 +27,15 @@ class TimeCasesChart extends StatelessWidget {
       Map timeCasesMap) {
     List<DateTime> caseDateList = [];
 
-    var format1 = new DateFormat("dd-MMM-yy");
+    var format1 = new DateFormat("yyyy-MM-dd");
     var dateList = timeCasesMap.keys.toList();
 
     for (int i = 0; i < dateList.length; i++) {
-      caseDateList.add(format1.parse(dateList[i]).add(Duration(
-          milliseconds: DateTime(1970 + 2000).millisecondsSinceEpoch)));
+      caseDateList.add(format1.parse(dateList[i]));
     }
     caseDateList.sort((a, b) => a.compareTo(b));
 
-    var formatter = new DateFormat('dd-MMM-yy');
+    var formatter = new DateFormat('yyyy-MM-dd');
     List<String> dateSortList = [];
     for (int f = 0; f < dateList.length; f++) {
       dateSortList.add(formatter.format(caseDateList[f]));

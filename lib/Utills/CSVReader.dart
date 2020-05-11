@@ -14,9 +14,9 @@ class CSVReader {
 
   _loadAssets() async {
     final myCaseInformationData = await rootBundle.loadString("assets/CaseInformation.csv");
-    List<List<dynamic>> csvTable1 = CsvToListConverter().convert(myCaseInformationData);
+    List<List<dynamic>> csvTable1 = CsvToListConverter().convert(myCaseInformationData, eol: '\n');
     final myTestingAggregatesData = await rootBundle.loadString("assets/TestingAggregates.csv");
-    List<List<dynamic>> csvTable2 = CsvToListConverter().convert(myTestingAggregatesData);
+    List<List<dynamic>> csvTable2 = CsvToListConverter().convert(myTestingAggregatesData, eol: '\n');
     caseInformationData = csvTable1;
     testingAggregatesData = csvTable2;
   }
